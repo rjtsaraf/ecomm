@@ -4,7 +4,7 @@ import com.sun.javafx.beans.IDProperty;
 import lombok.Data;
 
 import javax.persistence.*;
-
+//comment
 @Entity
 @Data
 public class User
