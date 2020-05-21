@@ -7,10 +7,13 @@ import com.ecommerce.shoppinghub.command.LoginUserCommand;
 import com.ecommerce.shoppinghub.command.UserCommand;
 import com.ecommerce.shoppinghub.domain.Type;
 import com.ecommerce.shoppinghub.domain.User;
+import com.ecommerce.shoppinghub.exceptions.BadRequestException;
+import com.ecommerce.shoppinghub.exceptions.NotFoundException;
 import com.ecommerce.shoppinghub.mapper.UserMapper;
 import com.ecommerce.shoppinghub.repositories.TypeRepository;
 import com.ecommerce.shoppinghub.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Random;
 
@@ -35,7 +38,7 @@ public class UserServiceImpl implements UserService
 
         User user=userMapper.UserDTOtoUser(userDTO);
         if(userRepository.findByName(userDTO.getName())!=null)
-            return null;
+            throw new NotFoundException("user already exists");
         Type type =typeRepository.findByValue("User");
         user.setTypeid(type.getId());
         return userMapper.UserTOUSerDTO(userRepository.save(user));
@@ -45,6 +48,8 @@ public class UserServiceImpl implements UserService
     @Override
     public Long  checkLogincredentials(LoginDTO loginDTO)
     {
+        if(loginDTO.getPassword()==null)
+            throw new BadRequestException("Password not found");
         User user=userRepository.findByName(loginDTO.getName());
         if(user!=null)
         {
@@ -52,8 +57,10 @@ public class UserServiceImpl implements UserService
             {
                 return user.getId();
             }
+            else
+                throw new NotFoundException("Incorrect password");
         }
-        return -1L;
+        throw new NotFoundException("User doesn't exist");
     }
 
     @Override
@@ -68,7 +75,7 @@ public class UserServiceImpl implements UserService
         System.out.println(otp+"OTP");
         User user=userRepository.findByPhoneNo(otpDTO.getPhoneNo());
         if(user==null)
-            return null;
+            throw new NotFoundException("user is not registered with given phone number");
         user.setOtp(otp);
         User usernew=userRepository.save(user);
         return userMapper.UserTOUSerDTO(usernew);
@@ -79,7 +86,7 @@ public class UserServiceImpl implements UserService
         User user=userRepository.findByPhoneNo(otpDTO.getPhoneNo());
       if (user.getOtp()==otpDTO.getOtp())
         return userMapper.UserTOUSerDTO(user);
-        return null;
+        throw new NotFoundException("Incorrect OTP");
     }
 
 
