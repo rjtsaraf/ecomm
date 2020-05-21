@@ -1,17 +1,14 @@
-package com.ecommerce.shoppinghub.domain;
+package com.ecommerce.shoppinghub.DTO;
 
-import com.sun.javafx.beans.IDProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-//comment
-@Entity
 @Data
-public class User
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO
 {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String address;

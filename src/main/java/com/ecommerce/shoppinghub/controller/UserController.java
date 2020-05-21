@@ -1,13 +1,15 @@
 package com.ecommerce.shoppinghub.controller;
 
-import com.ecommerce.shoppinghub.command.LoginUserCommand;
-import com.ecommerce.shoppinghub.command.UserCommand;
+import com.ecommerce.shoppinghub.DTO.LoginDTO;
+import com.ecommerce.shoppinghub.DTO.OtpDTO;
+import com.ecommerce.shoppinghub.DTO.UserDTO;
 import com.ecommerce.shoppinghub.services.UserService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@ResponseBody
+@RequestMapping("/ecomm/user/")
 public class UserController
 {
     private  final UserService userService;
@@ -16,34 +18,34 @@ public class UserController
         this.userService = userService;
     }
 
-    @GetMapping
-    @RequestMapping("/register")
-    public String CreateNewUser(Model model)
-    {
-        model.addAttribute("UserForm",new UserCommand());
-        return "registerForm";
-    }
+//    @GetMapping("register")
+//    public String CreateNewUser(Model model)
+//    {
+//        model.addAttribute("UserForm",new UserCommand());
+//        return "registerForm";
+//    }
 
-    @PostMapping
-    @RequestMapping("/register/")
-    @ResponseBody
-    public String CreateNewUser( @ModelAttribute("UserForm") UserCommand  userCommand)
+    @PostMapping("register/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String  CreateNewUser(@RequestBody UserDTO userDTO)
     {
-        UserCommand userCommand1=userService.addNewUser(userCommand);
+        UserDTO userDTO1=userService.addNewUser(userDTO);
        /* if(userCommand!=null)*/
 
-        return "hello";
+        if(userDTO1!=null)
+            return userDTO1.getId()+"";
+        return "Username already exists";
     }
 
-    @GetMapping
+   /* @GetMapping
     @RequestMapping("/login")
     public String LoginUser(Model model)
     {
         model.addAttribute("LoginForm",new LoginUserCommand());
         return  "Login";
-    }
+    }*/
 
-    @PostMapping
+   /* @GetMapping
     @RequestMapping("/login/")
     @ResponseBody
     public String LoginUser( @ModelAttribute("LoginForm") LoginUserCommand  loginUserCommand)
@@ -53,9 +55,9 @@ public class UserController
         return "loggedin";
        else
            return "user doesn't exist with this id and password";
-    }
+    }*/
 
-    @PostMapping
+   /* @PostMapping
     @RequestMapping("/exist/{username}")
     @ResponseBody
     public int CheckExisitingUser(@PathVariable("username") String username)
@@ -63,5 +65,35 @@ public class UserController
         if(userService.findByUserName(username)!=null)
             return 1;
         return 0;
+    }*/
+
+    @GetMapping("/login/")
+    @ResponseBody
+    public String LoginUser( @RequestBody LoginDTO loginDTO)
+    {
+        Long id=userService.checkLogincredentials(loginDTO);
+        if(id!=null)
+            return "loggedin with id "+id;
+        else
+            return "user doesn't exist with this id and password";
+    }
+    @PutMapping("/generateOTP/")
+    @ResponseBody
+    public String GenerateOTP(@RequestBody OtpDTO otpDTO)
+    {
+        UserDTO userDTO=userService.generateOTP(otpDTO);
+        if(userDTO!=null)
+            return "OTP generated for id "+userDTO.getId();
+        return "Phone Number is invalid";
+    }
+
+    @GetMapping("/validateOTP/")
+    @ResponseBody
+    public String ValidateOTP(@RequestBody OtpDTO otpDTO)
+    {
+        UserDTO userDTO=userService.validateOTP(otpDTO);
+        if(userDTO!=null)
+            return "loggedin with id "+userDTO.getId();
+        return "Otp is invalid";
     }
 }
