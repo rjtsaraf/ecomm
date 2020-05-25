@@ -2,7 +2,7 @@ package com.ecommerce.shoppinghub.mapper;
 
 
 import com.ecommerce.shoppinghub.DTO.UserDTO;
-import com.ecommerce.shoppinghub.domain.User;
+import com.ecommerce.shoppinghub.models.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
