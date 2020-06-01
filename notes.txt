@@ -1,0 +1,60 @@
+system design
+LLD:low level
+
+ATM:
+
+Classes
+
+User
+Product
+Order
+
+
+HLD:high level
+infra
+
+Db:MYSQL
+Cache: Redis
+Queue:
+
+
+Spring Security
+
+Filter =>
+1. AuthFilter extend Filter
+	doFilter():
+
+
+Authentication => correct user(admin,user)
+NOT AUTH: 401()
+
+Authorization => correct permission
+NOT AUTHORIZED: 403()
+
+Authentication:
+
+JWT TOKEN
+{
+	"username":"",
+	"timestamp":""
+}
+
+Table:
+User + Role
+
+u1 => admin_role
+u1 => user_role
+
+
+Role
+
+
+1.Get token from header(AuthFilter)
+2.Get username from auth token
+3. UserDetails(Spring) =>IMPL
+
+Fetch user from DB on basis of username
+
+ECommUser extends UserDetails = build(user)
+
+4.Check Permission
