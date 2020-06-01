@@ -7,7 +7,7 @@ import javax.persistence.*;
 //comment
 @Entity
 @Data
-public class User
+public class User extends Base
 {
 
     @Id

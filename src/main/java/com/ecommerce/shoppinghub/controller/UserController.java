@@ -1,14 +1,12 @@
 package com.ecommerce.shoppinghub.controller;
 
-import com.ecommerce.shoppinghub.DTO.LoginDTO;
-import com.ecommerce.shoppinghub.DTO.OtpDTO;
-import com.ecommerce.shoppinghub.DTO.UserDTO;
+import com.ecommerce.shoppinghub.DTO.*;
 import com.ecommerce.shoppinghub.exceptions.BadRequestException;
 import com.ecommerce.shoppinghub.exceptions.NotFoundException;
+import com.ecommerce.shoppinghub.services.OrderService;
 import com.ecommerce.shoppinghub.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @ResponseBody
@@ -16,9 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController
 {
     private  final UserService userService;
+    private final OrderService orderService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, OrderService orderService) {
         this.userService = userService;
+        this.orderService = orderService;
     }
 
 //    @GetMapping("register")
@@ -115,5 +115,13 @@ public class UserController
         System.out.println(exception.getMessage());
 
         return exception.getMessage();
+    }
+
+    @PostMapping("/placeOrder")
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderplacedDTO placeOrder(@RequestBody OrderDTO orderDTO)
+    {
+
+        return orderService.orderItems(orderDTO);
     }
 }
