@@ -1,18 +1,11 @@
 package com.ecommerce.shoppinghub.bootstrap;
 
-import com.ecommerce.shoppinghub.domain.Type;
-import com.ecommerce.shoppinghub.repositories.TypeRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataLoader implements CommandLineRunner
 {
-    private final TypeRepository typeRepository;
-
-    public DataLoader(TypeRepository typeRepository) {
-        this.typeRepository = typeRepository;
-    }
 
 
     @Override

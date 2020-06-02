@@ -16,12 +16,11 @@ public class UserToUserCommand implements Converter<User, UserCommand>
 
         UserCommand userCommand=new UserCommand();
         userCommand.setId(user.getId());
-        userCommand.setName(user.getName());
+        userCommand.setName(user.getUsername());
         userCommand.setPhoneNo(user.getPhoneNo());
         userCommand.setEmail(user.getEmail());
         userCommand.setPassword(user.getPassword());
         userCommand.setAddress(user.getAddress());
-        userCommand.setTypeid(user.getTypeid());
         return userCommand;
     }
 }

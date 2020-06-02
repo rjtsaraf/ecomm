@@ -6,11 +6,12 @@ import com.ecommerce.shoppinghub.exceptions.NotFoundException;
 import com.ecommerce.shoppinghub.services.OrderService;
 import com.ecommerce.shoppinghub.services.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @ResponseBody
-@RequestMapping("/ecomm/user/")
+@RequestMapping("/api/v1/user/")
 public class UserController
 {
     private  final UserService userService;
@@ -28,16 +29,16 @@ public class UserController
 //        return "registerForm";
 //    }
 
-    @PostMapping("register/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String  CreateNewUser(@RequestBody UserDTO userDTO) throws javassist.NotFoundException {
-        UserDTO userDTO1=userService.addNewUser(userDTO);
-       /* if(userCommand!=null)*/
-
-
-            return userDTO1.getId()+"";
-
-    }
+//    @PostMapping("register/")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public String  CreateNewUser(@RequestBody UserDTO userDTO) throws javassist.NotFoundException {
+//        UserDTO userDTO1=userService.addNewUser(userDTO);
+//       /* if(userCommand!=null)*/
+//
+//
+//            return userDTO1.getId()+"";
+//
+//    }
 
    /* @GetMapping
     @RequestMapping("/login")
@@ -69,35 +70,36 @@ public class UserController
         return 0;
     }*/
 
-    @PostMapping("/login/")
-    @ResponseBody
-    public String LoginUser( @RequestBody LoginDTO loginDTO)
-    {
-        Long id=userService.checkLogincredentials(loginDTO);
-        if(id!=null)
-            return "loggedin with id "+id;
-        else
-            return "user doesn't exist with this id and password";
-    }
-    @PostMapping("/generateOTP/")
-    @ResponseBody
-    public String GenerateOTP(@RequestBody OtpDTO otpDTO)
-    {
-        UserDTO userDTO=userService.generateOTP(otpDTO);
-        if(userDTO!=null)
-            return "OTP generated for id "+userDTO.getId();
-        return "error";
-    }
+//    @PostMapping("/login/")
+//    @ResponseBody
+//    public String LoginUser( @RequestBody LoginDTO loginDTO)
+//    {
+//        Long id=userService.checkLogincredentials(loginDTO);
+//        if(id!=null)
+//            return "loggedin with id "+id;
+//        else
+//            return "user doesn't exist with this id and password";
+//    }
 
-    @PostMapping("/validateOTP/")
-    @ResponseBody
-    public String ValidateOTP(@RequestBody OtpDTO otpDTO)
-    {
-        UserDTO userDTO=userService.validateOTP(otpDTO);
-        if(userDTO!=null)
-            return "loggedin with id "+userDTO.getId();
-        return "Otp is invalid";
-    }
+//    @PostMapping("/generateOTP/")
+//    @ResponseBody
+//    public String GenerateOTP(@RequestBody OtpDTO otpDTO)
+//    {
+//        UserDTO userDTO=userService.generateOTP(otpDTO);
+//        if(userDTO!=null)
+//            return "OTP generated for id "+userDTO.getId();
+//        return "error";
+//    }
+//
+//    @PostMapping("/validateOTP/")
+//    @ResponseBody
+//    public String ValidateOTP(@RequestBody OtpDTO otpDTO)
+//    {
+//        UserDTO userDTO=userService.validateOTP(otpDTO);
+//        if(userDTO!=null)
+//            return "loggedin with id "+userDTO.getId();
+//        return "Otp is invalid";
+//    }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
@@ -115,6 +117,30 @@ public class UserController
         System.out.println(exception.getMessage());
 
         return exception.getMessage();
+    }
+
+
+    @GetMapping("/all")
+    public String allAccess() {
+        return "Public Content.";
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    public String userAccess() {
+        return "User Content.";
+    }
+
+    @GetMapping("/mod")
+    @PreAuthorize("hasRole('MODERATOR')")
+    public String moderatorAccess() {
+        return "Moderator Board.";
+    }
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminAccess() {
+        return "Admin Board.";
     }
 
     @PostMapping("/placeOrder")

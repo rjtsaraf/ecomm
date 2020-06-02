@@ -39,7 +39,8 @@ public class OrderServiceImpl implements  OrderService
         for(int i=0;i<orderDTO.getItemDTOList().size();i++)
         {
             Item item=  itemMapper.convertItemDTOToItem( itemList.get(i));
-            List<PhysicalItem>  physicalItems1= physicalItemRepository.findPhysicalItem(item.getId(),"available",item.getQuantity());
+//            List<PhysicalItem>  physicalItems1= physicalItemRepository.findPhysicalItem(item.getId(),"available",item.getQuantity());
+            List<PhysicalItem>  physicalItems1= physicalItemRepository.findByItemIdAndStatus(item.getId(),"available");
 
         }
         return null;
