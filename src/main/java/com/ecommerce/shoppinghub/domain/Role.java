@@ -1,4 +1,4 @@
-package com.ecommerce.shoppinghub.models;
+package com.ecommerce.shoppinghub.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.ecommerce.shoppinghub.services;
 
-import com.ecommerce.shoppinghub.models.User;
+import com.ecommerce.shoppinghub.domain.User;
 import com.ecommerce.shoppinghub.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

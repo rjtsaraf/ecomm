@@ -53,7 +53,7 @@ public class DatabaseConfiguration {
             @Qualifier("dataSource") DataSource dataSource) {
         return builder
                 .dataSource(dataSource)
-                .packages("com.ecommerce.shoppinghub.models")
+                .packages("com.ecommerce.shoppinghub.domain")
                 .build();
     }
 

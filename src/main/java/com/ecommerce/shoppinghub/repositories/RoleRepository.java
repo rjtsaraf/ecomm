@@ -1,7 +1,7 @@
 package com.ecommerce.shoppinghub.repositories;
 
-import com.ecommerce.shoppinghub.models.Role;
-import com.ecommerce.shoppinghub.models.RoleType;
+import com.ecommerce.shoppinghub.domain.Role;
+import com.ecommerce.shoppinghub.domain.RoleType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.ecommerce.shoppinghub.converter;
 
 import com.ecommerce.shoppinghub.command.UserCommand;
-import com.ecommerce.shoppinghub.models.User;
+import com.ecommerce.shoppinghub.domain.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
