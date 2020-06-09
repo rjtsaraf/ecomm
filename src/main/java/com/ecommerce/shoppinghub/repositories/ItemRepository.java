@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long>
 {
-        @Query("select i from Item i where i.pid = ?1 and i.capacity= ?2")
+    @Query("select i from Item i where i.pid = ?1 and i.capacity= ?2")
     Item findItemByPidAndCapacity(Long pid, String capacity);
 
     public List<Item> findByPid(Long id);

@@ -20,6 +20,5 @@ public class UserCommand
     private String phoneNo;
     private String password;
     private String Email;
-    private int typeid;
 
 }
