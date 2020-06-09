@@ -16,15 +16,11 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(	name = "user",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "username"),
-                @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = "username", name = "uniq_name"),
+                @UniqueConstraint(columnNames = "email", name = "uniq_email")
         })
-public class User
+public class User extends  Base
 {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @NotBlank
     @Size(max = 20)

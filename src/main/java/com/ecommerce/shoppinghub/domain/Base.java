@@ -6,11 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -23,12 +22,17 @@ public class Base
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+   /* @Temporal(TemporalType.TIMESTAMP)*/
     @CreationTimestamp
+    @CreatedDate
     private LocalDateTime createdAt;
+
     @UpdateTimestamp
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    private boolean isDeleted;
+    private boolean isDeleted=false;
 
 
 
