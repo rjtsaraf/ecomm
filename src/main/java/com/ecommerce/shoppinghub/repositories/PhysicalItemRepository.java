@@ -11,6 +11,6 @@ public interface PhysicalItemRepository extends JpaRepository<PhysicalItem,Long>
 {
 //    @Query("select p from PhysicalItem p where p.id=?1 and p.status=?2 limit ?3")
 //    public List<PhysicalItem> findPhysicalItem(Long itemid,String status,Long quantity);
-
+// Added a comment from mona soni
     List<PhysicalItem> findByItemIdAndStatus(Long itemid,String status);
 }
