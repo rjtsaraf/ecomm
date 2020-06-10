@@ -9,6 +9,10 @@ import com.ecommerce.shoppinghub.mapper.ItemMapper;
 import com.ecommerce.shoppinghub.repositories.OrderItemRepository;
 import com.ecommerce.shoppinghub.repositories.OrderRepository;
 import com.ecommerce.shoppinghub.repositories.PhysicalItemRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,6 +46,13 @@ public class OrderServiceImpl implements  OrderService
 //            List<PhysicalItem>  physicalItems1= physicalItemRepository.findPhysicalItem(item.getId(),"available",item.getQuantity());
             List<PhysicalItem>  physicalItems1= physicalItemRepository.findByItemIdAndStatus(item.getId(),"available");
 
+            Sort sort = Sort.by("itemId");
+            List<PhysicalItem>  physicalItems2= physicalItemRepository.findByItemIdAndStatus(item.getId(),"available",sort);
+
+            Pageable pageable= PageRequest.of(0,item.getQuantity().intValue());
+            Page<PhysicalItem> physicalItemsPage= physicalItemRepository.findByItemIdAndStatus(item.getId(),"available",pageable);
+
+            List<PhysicalItem> l= physicalItemsPage.getContent();
         }
         return null;
 

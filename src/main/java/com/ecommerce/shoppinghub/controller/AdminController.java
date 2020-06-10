@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/ecomm/Admin")
+@RequestMapping("/api/v1/auth")
 @ResponseBody
 public class AdminController
 {
@@ -45,11 +45,12 @@ public class AdminController
         return itemService.addItem(itemDTO);
     }
 
+    //TODO Need to update
     @GetMapping("/viewItems")
     @ResponseStatus(HttpStatus.OK)
-    public ListProductDTO getAllItems()
+    public ListItemDTO getAllItems()
     {
-        return productService.getAllProducts();
+        return itemService.viewAllItems();
     }
 
 
