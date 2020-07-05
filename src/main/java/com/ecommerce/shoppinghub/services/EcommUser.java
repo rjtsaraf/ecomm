@@ -9,12 +9,14 @@ import java.util.stream.Collectors;
 import com.ecommerce.shoppinghub.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 /**
  * @author Virender Bhargav
  */
+@ToString
 @AllArgsConstructor
 public class EcommUser implements UserDetails {
     private static final long serialVersionUID = 1L;
