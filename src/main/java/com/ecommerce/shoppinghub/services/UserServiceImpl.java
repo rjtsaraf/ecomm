@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO generateOTP(OtpDTO otpDTO) {
+    public OtpDTO generateOTP(OtpDTO otpDTO) {
         int otp = new Random().nextInt((9999 - 100) + 1) + 10;
         System.out.println(otp + "OTP");
         Optional<User> userOptional = userRepository.findByPhoneNo(otpDTO.getPhoneNo());
@@ -137,7 +137,8 @@ public class UserServiceImpl implements UserService {
         User user = userOptional.get();
         user.setOtp(otp);
         User usernew = userRepository.save(user);
-        return userMapper.UserTOUSerDTO(usernew);
+        otpDTO.setOtp(otp);
+        return otpDTO;
     }
 
     @Override

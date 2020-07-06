@@ -11,6 +11,6 @@ public interface UserService
     UserDTO addNewUser(UserDTO  userDTO) throws NotFoundException;
     UserDTO  checkLogincredentials(LoginDTO loginDTO);
     User findByUserName(String name);
-    UserDTO generateOTP(OtpDTO otpDTO);
+    OtpDTO generateOTP(OtpDTO otpDTO);
     UserDTO validateOTP(OtpDTO otpDTO);
 }

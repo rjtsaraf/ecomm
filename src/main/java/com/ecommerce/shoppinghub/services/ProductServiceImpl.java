@@ -3,7 +3,9 @@ package com.ecommerce.shoppinghub.services;
 import com.ecommerce.shoppinghub.DTO.ListProductDTO;
 import com.ecommerce.shoppinghub.DTO.ProductDTO;
 import com.ecommerce.shoppinghub.domain.Product;
+import com.ecommerce.shoppinghub.domain.User;
 import com.ecommerce.shoppinghub.exceptions.BadRequestException;
+import com.ecommerce.shoppinghub.exceptions.NotFoundException;
 import com.ecommerce.shoppinghub.mapper.ProductMapper;
 import com.ecommerce.shoppinghub.repositories.ProductRepository;
 import com.ecommerce.shoppinghub.security.AuthTokenFilter;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,5 +47,16 @@ public class ProductServiceImpl implements ProductService
                 .stream()
                 .map(product-> productMapper.convertProductToProductDTO(product))
                 .collect(Collectors.toList()));
+    }
+    @Override
+    public ProductDTO getProductById(Long id)
+    {
+        Optional<Product> productOptional=productRepository.findById(id);
+        Product product=productOptional.get();
+        if(product==null)
+            throw new NotFoundException("product not found");
+        return productMapper.convertProductToProductDTO(product);
+
+
     }
 }

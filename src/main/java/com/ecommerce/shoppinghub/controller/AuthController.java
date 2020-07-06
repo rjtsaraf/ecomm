@@ -50,24 +50,19 @@ public class AuthController {
 
 
     }
-
     @PostMapping("/generateOTP/")
     @ResponseBody
-    public String GenerateOTP(@RequestBody OtpDTO otpDTO)
+    public OtpDTO GenerateOTP(@RequestBody OtpDTO otpRequest)
     {
-        UserDTO userDTO=userService.generateOTP(otpDTO);
-        if(userDTO!=null)
-            return "OTP generated for id "+userDTO.getId();
-        return "error";
+        return userService.generateOTP(otpRequest);
     }
+
 
     @PostMapping("/validateOTP/")
     @ResponseBody
-    public String ValidateOTP(@RequestBody OtpDTO otpDTO)
+    public UserDTO ValidateOTP(@RequestBody OtpDTO otpDTO)
     {
-        UserDTO userDTO=userService.validateOTP(otpDTO);
-        if(userDTO!=null)
-            return "loggedin with id "+userDTO.getId();
-        return "Otp is invalid";
+        return userService.validateOTP(otpDTO);
+
     }
 }

@@ -31,13 +31,11 @@ public class UserController
 
 //    @PostMapping("register/")
 //    @ResponseStatus(HttpStatus.CREATED)
-//    public String  CreateNewUser(@RequestBody UserDTO userDTO) throws javassist.NotFoundException {
+//    public String  CreateNewUser(@RequestBody UserDTO userDTO) throws javassist.NotFoundException
+//    {
 //        UserDTO userDTO1=userService.addNewUser(userDTO);
-//       /* if(userCommand!=null)*/
-//
-//
-//            return userDTO1.getId()+"";
-//
+//        /* if(userCommand!=null)*/
+//         return userDTO1.getId()+"";
 //    }
 
    /* @GetMapping
@@ -147,7 +145,6 @@ public class UserController
     @ResponseStatus(HttpStatus.CREATED)
     public OrderplacedDTO placeOrder(@RequestBody OrderDTO orderDTO)
     {
-
         return orderService.orderItems(orderDTO);
     }
 }
