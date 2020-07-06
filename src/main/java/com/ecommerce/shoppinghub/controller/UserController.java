@@ -3,8 +3,12 @@ package com.ecommerce.shoppinghub.controller;
 import com.ecommerce.shoppinghub.DTO.*;
 import com.ecommerce.shoppinghub.exceptions.BadRequestException;
 import com.ecommerce.shoppinghub.exceptions.NotFoundException;
+import com.ecommerce.shoppinghub.services.EcommUser;
 import com.ecommerce.shoppinghub.services.OrderService;
 import com.ecommerce.shoppinghub.services.UserService;
+import com.ecommerce.shoppinghub.utils.SecurityContextUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/user/")
 public class UserController
 {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private  final UserService userService;
     private final OrderService orderService;
 
@@ -138,6 +145,8 @@ public class UserController
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
     public String adminAccess() {
+        EcommUser loggedInUser = SecurityContextUtil.getLoggedInUser();
+        logger.info("loggedInUser :{}",loggedInUser);
         return "Admin Board.";
     }
 
