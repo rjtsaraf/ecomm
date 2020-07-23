@@ -7,10 +7,11 @@ import com.ecommerce.shoppinghub.services.EcommUser;
 import com.ecommerce.shoppinghub.services.ProductService;
 import com.ecommerce.shoppinghub.utils.SecurityContextUtil;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth/product")
+@RequestMapping("/api/v1/product")
 public class ProductController
 {
     ProductService productService;
@@ -35,6 +36,7 @@ public class ProductController
     }
 
     @PostMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ProductDTO addProduct(@RequestBody  ProductDTO productDTO)
     {
@@ -60,6 +62,6 @@ public class ProductController
     @ResponseStatus(HttpStatus.OK)
     public ProductDTO deleteProduct(@PathVariable String id)
     {
-        return 
+        return new ProductDTO();
     }
 }

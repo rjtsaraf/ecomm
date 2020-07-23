@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO addNewUser(UserDTO userDTO) {
 
         User user = userMapper.UserDTOtoUser(userDTO);
-        if (userRepository.findByUsername(userDTO.getName()).isPresent()) throw new NotFoundException("user already "
+        if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) throw new NotFoundException("user already "
                                                                                                       + "exists");
         Set<String> strRoles = userDTO.getRole();
         Set<Role> roles = new HashSet<>();
@@ -92,7 +92,6 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.UserTOUSerDTO(userRepository.save(user));
     }
-
 
     @Override
     public UserDTO checkLogincredentials(LoginDTO loginDTO) {
