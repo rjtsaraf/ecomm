@@ -59,4 +59,21 @@ public class ProductServiceImpl implements ProductService
 
 
     }
+
+    @Override
+    public ProductDTO updateProduct(ProductDTO productDTO)
+    {
+        Optional<Product> productOptional= productRepository.findById(productDTO.getId());
+        Product product=productOptional.get();
+        if(product==null)
+            throw new NotFoundException("product not found");
+        if(productDTO.getProduct_code()!=null)
+        product.setProduct_code(productDTO.getProduct_code());
+        if(productDTO.getProduct_name()!=null)
+        product.setProduct_name(productDTO.getProduct_name());
+        product.setAdmin_id(productDTO.getAdmin_id());
+        return productMapper.convertProductToProductDTO(product);
+    }
+
 }
+

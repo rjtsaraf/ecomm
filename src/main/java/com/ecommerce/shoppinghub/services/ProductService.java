@@ -8,4 +8,5 @@ public interface ProductService
     ProductDTO addProduct(ProductDTO productDTO);
     ListProductDTO getAllProducts();
     ProductDTO getProductById(Long id);
+    ProductDTO updateProduct(ProductDTO productDTO);
 }

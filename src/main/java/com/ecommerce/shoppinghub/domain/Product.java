@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 @Data
 public class Product extends Base
 {
+
     private String product_name;
     private String product_code;
     private Long admin_id;
