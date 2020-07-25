@@ -26,6 +26,7 @@ public class ProductServiceImpl implements ProductService
     private final ProductMapper productMapper;
 
 
+
     public ProductServiceImpl(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
@@ -45,16 +46,17 @@ public class ProductServiceImpl implements ProductService
     {
         return new  ListProductDTO( productRepository.findAll()
                 .stream()
-                .map(product-> productMapper.convertProductToProductDTO(product))
+                .map(productMapper::convertProductToProductDTO)
                 .collect(Collectors.toList()));
     }
     @Override
     public ProductDTO getProductById(Long id)
     {
         Optional<Product> productOptional=productRepository.findById(id);
-        Product product=productOptional.get();
-        if(product==null)
+        if(!productOptional.isPresent())
             throw new NotFoundException("product not found");
+        Product product=productOptional.get();
+
         return productMapper.convertProductToProductDTO(product);
 
 
@@ -63,16 +65,32 @@ public class ProductServiceImpl implements ProductService
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO)
     {
-        Optional<Product> productOptional= productRepository.findById(productDTO.getId());
-        Product product=productOptional.get();
-        if(product==null)
+        Optional<Product> productOptional= productRepository.findByIdAndIsDeleted(productDTO.getId(),false);
+
+        if(!productOptional.isPresent())
             throw new NotFoundException("product not found");
+
+        Product product=productOptional.get();
         if(productDTO.getProduct_code()!=null)
         product.setProduct_code(productDTO.getProduct_code());
         if(productDTO.getProduct_name()!=null)
         product.setProduct_name(productDTO.getProduct_name());
         product.setAdmin_id(productDTO.getAdmin_id());
+        productRepository.save(product);
         return productMapper.convertProductToProductDTO(product);
+    }
+
+    @Override
+    public ProductDTO deleteProduct(Long id)
+    {
+        Optional<Product> productOptional=productRepository.findByIdAndIsDeleted(id,false);
+        if(!productOptional.isPresent())
+            throw new NotFoundException("No active product found");
+        Product product=productOptional.get();
+        product.setDeleted(true);
+        Product updatedProduct = productRepository.save(product);
+        return productMapper.convertProductToProductDTO(updatedProduct);
+
     }
 
 }
