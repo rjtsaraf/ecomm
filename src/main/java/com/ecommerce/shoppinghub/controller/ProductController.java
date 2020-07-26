@@ -66,6 +66,7 @@ public class ProductController
     public void deleteProduct(@PathVariable String id)
     {
         EcommUser loggedInUser = SecurityContextUtil.getLoggedInUser();
+        //comment
          productService.deleteProduct(new Long(id));
     }
 }
