@@ -8,10 +8,10 @@ import javax.validation.constraints.NotBlank;
 public class ProductDTO
 {
     private Long id;
-    private Long admin_id;
-    private String product_name;
+    private Long adminId;
+    private String productName;
     @NotBlank(groups = Create.class, message = "product code can not be null")
-    private String product_code;
+    private String productCode;
     private boolean isDeleted;
 
     /**

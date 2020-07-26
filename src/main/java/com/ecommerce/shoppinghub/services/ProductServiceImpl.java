@@ -3,12 +3,9 @@ package com.ecommerce.shoppinghub.services;
 import com.ecommerce.shoppinghub.DTO.ListProductDTO;
 import com.ecommerce.shoppinghub.DTO.ProductDTO;
 import com.ecommerce.shoppinghub.domain.Product;
-import com.ecommerce.shoppinghub.domain.User;
-import com.ecommerce.shoppinghub.exceptions.BadRequestException;
 import com.ecommerce.shoppinghub.exceptions.NotFoundException;
 import com.ecommerce.shoppinghub.mapper.ProductMapper;
 import com.ecommerce.shoppinghub.repositories.ProductRepository;
-import com.ecommerce.shoppinghub.security.AuthTokenFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO addProduct(ProductDTO productDTO) {
-        logger.info("fetching product with adminId : {} ", productDTO.getAdmin_id());
+        logger.info("fetching product with adminId : {} ", productDTO.getAdminId());
         Product product = productRepository.save(productMapper.convertProductDTOToProduct(productDTO));
         return productMapper.convertProductToProductDTO(product);
 
@@ -64,13 +61,10 @@ public class ProductServiceImpl implements ProductService {
 
         if (!productOptional.isPresent())
             throw new NotFoundException("product not found");
-
         Product product = productOptional.get();
-        if (productDTO.getProduct_code() != null)
-            product.setProduct_code(productDTO.getProduct_code());
-        if (productDTO.getProduct_name() != null)
-            product.setProduct_name(productDTO.getProduct_name());
-        product.setAdmin_id(productDTO.getAdmin_id());
+        product.setProductCode(productDTO.getProductCode());
+        product.setProductName(productDTO.getProductName());
+        product.setAdminId(productDTO.getAdminId());
         productRepository.save(product);
         return productMapper.convertProductToProductDTO(product);
     }

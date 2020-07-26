@@ -2,7 +2,6 @@ package com.ecommerce.shoppinghub.controller;
 
 import com.ecommerce.shoppinghub.DTO.ListProductDTO;
 import com.ecommerce.shoppinghub.DTO.ProductDTO;
-import com.ecommerce.shoppinghub.domain.Product;
 import com.ecommerce.shoppinghub.services.EcommUser;
 import com.ecommerce.shoppinghub.services.ProductService;
 import com.ecommerce.shoppinghub.utils.SecurityContextUtil;
@@ -43,19 +42,19 @@ public class ProductController
     {
         EcommUser loggedInUser = SecurityContextUtil.getLoggedInUser();
         Long id = loggedInUser.getId();
-        productDTO.setAdmin_id(id);
+        productDTO.setAdminId(id);
         return productService.addProduct(productDTO);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public ProductDTO updateProduct(@PathVariable String id,  @RequestBody @Validated(ProductDTO.Update.class)  ProductDTO productDTO)
     {
 
         EcommUser loggedInUser=SecurityContextUtil.getLoggedInUser();
         Long productId= loggedInUser.getId();
-        productDTO.setAdmin_id(productId);
+        productDTO.setAdminId(productId);
         productDTO.setId(new Long(id));
         return productService.updateProduct(productDTO);
     }
