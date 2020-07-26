@@ -48,6 +48,7 @@ public class ProductController
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public ProductDTO updateProduct(@PathVariable String id,  @RequestBody @Validated(ProductDTO.Update.class)  ProductDTO productDTO)
     {
@@ -60,6 +61,7 @@ public class ProductController
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProduct(@PathVariable String id)
     {
