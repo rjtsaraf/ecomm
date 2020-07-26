@@ -44,7 +44,7 @@ public class ItemServiceImpl  implements ItemService
     {
         return  new ListItemDTO( itemRepository.findAll()
                 .stream()
-                .map(item -> itemMapper.convertItemToItemDTO(item))
+                .map(itemMapper::convertItemToItemDTO)
                 .collect(Collectors.toList()));
 
     }
@@ -64,8 +64,7 @@ public class ItemServiceImpl  implements ItemService
     @Override
     public ListItemDTO findItemByProductId(Long id) {
          return new ListItemDTO(itemRepository.findByPid(id).stream()
-                .map(item ->
-                 itemMapper.convertItemToItemDTO(item)
+                .map(item -> itemMapper.convertItemToItemDTO(item)
                 ).collect(Collectors.toList()));
     }
 
