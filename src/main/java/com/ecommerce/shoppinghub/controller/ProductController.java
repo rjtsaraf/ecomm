@@ -8,6 +8,7 @@ import com.ecommerce.shoppinghub.services.ProductService;
 import com.ecommerce.shoppinghub.utils.SecurityContextUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,7 +39,7 @@ public class ProductController
     @PostMapping("/")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO addProduct(@RequestBody  ProductDTO productDTO)
+    public ProductDTO addProduct(@RequestBody @Validated(ProductDTO.Create.class) ProductDTO productDTO)
     {
         EcommUser loggedInUser = SecurityContextUtil.getLoggedInUser();
         Long id = loggedInUser.getId();
@@ -48,20 +49,21 @@ public class ProductController
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductDTO updateProduct(@PathVariable String id,  @RequestBody ProductDTO productDTO)
+    public ProductDTO updateProduct(@PathVariable String id,  @RequestBody @Validated(ProductDTO.Update.class)  ProductDTO productDTO)
     {
 
         EcommUser loggedInUser=SecurityContextUtil.getLoggedInUser();
         Long productId= loggedInUser.getId();
         productDTO.setAdmin_id(productId);
-        productDTO.setId(productId);
+        productDTO.setId(new Long(id));
         return productService.updateProduct(productDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductDTO deleteProduct(@PathVariable String id)
+    public void deleteProduct(@PathVariable String id)
     {
-        return new ProductDTO();
+        EcommUser loggedInUser = SecurityContextUtil.getLoggedInUser();
+         productService.deleteProduct(new Long(id));
     }
 }
