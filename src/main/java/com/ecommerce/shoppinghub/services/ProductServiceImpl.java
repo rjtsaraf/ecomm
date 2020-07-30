@@ -64,7 +64,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = productOptional.get();
         product.setProductCode(productDTO.getProductCode());
         product.setProductName(productDTO.getProductName());
-        product.setAdminId(productDTO.getAdminId());
         productRepository.save(product);
         return productMapper.convertProductToProductDTO(product);
     }
@@ -76,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
             throw new NotFoundException("No active product found");
         Product product = productOptional.get();
         product.setDeleted(true);
+
         Product updatedProduct = productRepository.save(product);
         return productMapper.convertProductToProductDTO(updatedProduct);
 

@@ -51,10 +51,6 @@ public class ProductController
     @ResponseStatus(HttpStatus.OK)
     public ProductDTO updateProduct(@PathVariable String id,  @RequestBody @Validated(ProductDTO.Update.class)  ProductDTO productDTO)
     {
-
-        EcommUser loggedInUser=SecurityContextUtil.getLoggedInUser();
-        Long productId= loggedInUser.getId();
-        productDTO.setAdminId(productId);
         productDTO.setId(new Long(id));
         return productService.updateProduct(productDTO);
     }
@@ -64,8 +60,6 @@ public class ProductController
     @ResponseStatus(HttpStatus.OK)
     public void deleteProduct(@PathVariable String id)
     {
-        EcommUser loggedInUser = SecurityContextUtil.getLoggedInUser();
-        //comment
          productService.deleteProduct(new Long(id));
     }
 }

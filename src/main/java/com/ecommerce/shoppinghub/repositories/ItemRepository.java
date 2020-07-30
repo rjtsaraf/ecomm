@@ -16,4 +16,6 @@ public interface ItemRepository extends JpaRepository<Item, Long>
     Item findItemByPidAndCapacity(Long pid, String capacity);
 
     public List<Item> findByPid(Long id);
+    Optional<Item> findItemByPidAndIsDeleted(Long pid, boolean isDeleted);
+    Optional<Item> findItemByIdAndIsDeleted(Long id,boolean isDeleted);
 }
