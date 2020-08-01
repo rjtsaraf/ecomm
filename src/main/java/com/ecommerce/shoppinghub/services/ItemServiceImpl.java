@@ -36,7 +36,7 @@ public class ItemServiceImpl  implements ItemService
     @Override
     public ItemDTO getItem(Long id)
     {
-        Optional<Item> ItemOptional = itemRepository.findById(id);
+        Optional<Item> ItemOptional = itemRepository.findItemByIdAndIsDeleted(id,false);
         if(!ItemOptional.isPresent())
             throw new NotFoundException("Item not found");;
             Item item=ItemOptional.get();
