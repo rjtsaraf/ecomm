@@ -6,9 +6,11 @@ import com.ecommerce.shoppinghub.DTO.ListItemDTO;
 
 public interface ItemService
 {
-    public ItemDTO addItem(ItemDTO itemDTO);
-    public ListItemDTO viewAllItems();
-    public ItemDTO updateItembyQuantity(ItemDTO itemDTO);
-    public ListItemDTO findItemByProductId(Long id);
+    ItemDTO addItem(ItemDTO itemDTO);
+    ListItemDTO viewAllItems();
+    ItemDTO updateItembyQuantity(ItemDTO itemDTO);
+    ListItemDTO findItemByProductId(Long id);
+    ItemDTO getItem(Long id);
+    void deleteItem(Long id);
 
 }
