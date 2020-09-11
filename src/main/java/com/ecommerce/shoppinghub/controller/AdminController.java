@@ -6,6 +6,8 @@ import com.ecommerce.shoppinghub.DTO.ListProductDTO;
 import com.ecommerce.shoppinghub.DTO.ProductDTO;
 import com.ecommerce.shoppinghub.services.ItemService;
 import com.ecommerce.shoppinghub.services.ProductService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,9 +50,9 @@ public class AdminController
     //TODO Need to update
     @GetMapping("/viewItems")
     @ResponseStatus(HttpStatus.OK)
-    public ListItemDTO getAllItems()
+    public ListItemDTO getAllItems(Pageable pageable)
     {
-        return itemService.viewAllItems();
+        return itemService.viewAllItems(pageable);
     }
 
 
@@ -58,7 +60,7 @@ public class AdminController
     @ResponseStatus(HttpStatus.OK)
     public ItemDTO updateItem(@RequestBody ItemDTO itemDTO)
     {
-        return itemService.updateItembyQuantity(itemDTO);
+        return itemService.updateItemNotQuantity(itemDTO);
     }
 
     @GetMapping("/findItemByPid")
@@ -70,8 +72,8 @@ public class AdminController
 
     @GetMapping("/viewAllItems")
     @ResponseStatus(HttpStatus.OK)
-    public ListItemDTO viewAllItems()
+    public ListItemDTO viewAllItems(Pageable pageable)
     {
-        return itemService.viewAllItems();
+        return itemService.viewAllItems(pageable);
     }
 }

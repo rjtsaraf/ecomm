@@ -3,10 +3,9 @@ package com.ecommerce.shoppinghub.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -15,7 +14,13 @@ import javax.validation.constraints.Size;
 @Data
 public class Item extends Base
 {
+
     private Long pid;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name="pid")
+//    private Product product;
+
     @NotBlank
     @Size(max = 20)
     private String itemName;

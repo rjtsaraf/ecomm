@@ -15,6 +15,6 @@ public class Product extends Base
     private String productName;
     private String productCode;
     private Long adminId;
-//    @OneToMany(mappedBy = "Product")
+//    @OneToMany(mappedBy = "product")
 //    private Set<Item> itemSet;
 }
