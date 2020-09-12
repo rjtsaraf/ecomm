@@ -146,6 +146,7 @@ public class ItemServiceImpl  implements ItemService
             itemPhysicalItemDTO.setItemName(item.getItemName());
             itemPhysicalItemDTO.setPrice(item.getPrice());
             itemPhysicalItemDTO.setCapacity(item.getCapacity());
+            itemPhysicalItemDTO.setQuantity(item.getQuantity());
             itemPhysicalItemDTOS.add(itemPhysicalItemDTO);
 
         }

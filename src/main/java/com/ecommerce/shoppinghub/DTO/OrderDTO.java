@@ -8,7 +8,5 @@ import java.util.List;
 public class OrderDTO
 {
     private Long userid;
-    private List<ItemDTO> itemDTOList;
-
-
+    private List<ItemPlacedDTO> itemplacedDTOList;
 }

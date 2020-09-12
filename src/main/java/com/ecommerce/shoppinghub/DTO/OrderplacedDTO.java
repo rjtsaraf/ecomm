@@ -11,5 +11,4 @@ public class OrderplacedDTO
     private Long userid;
     private Long Amount;
     private LocalDateTime time;
-
 }
