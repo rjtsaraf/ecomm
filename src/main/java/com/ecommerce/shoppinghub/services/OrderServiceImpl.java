@@ -1,9 +1,6 @@
 package com.ecommerce.shoppinghub.services;
 
-import com.ecommerce.shoppinghub.DTO.ItemDTO;
-import com.ecommerce.shoppinghub.DTO.ItemPlacedDTO;
-import com.ecommerce.shoppinghub.DTO.OrderDTO;
-import com.ecommerce.shoppinghub.DTO.OrderplacedDTO;
+import com.ecommerce.shoppinghub.DTO.*;
 import com.ecommerce.shoppinghub.converter.ItemVoToItem;
 import com.ecommerce.shoppinghub.domain.*;
 import com.ecommerce.shoppinghub.exceptions.NotFoundException;
@@ -91,6 +88,7 @@ public class  OrderServiceImpl implements  OrderService
                 orderItem.setOrderId(placedOrder.getId());
                 orderItem.setPhysicalId(l.get(j).getId());
                 orderItem.setStatus(Status.ORDER_PLACED);
+                orderItem.setPrice(itemVo.getPrice());
                 orderItemRepository.save(orderItem);
             }
         }
@@ -111,4 +109,36 @@ public class  OrderServiceImpl implements  OrderService
         return orderplacedDTO;
 
     }
+
+    @Override
+    public List<OrdersListDTO> viewAllOrders() {
+        List<Orders> orders=orderRepository.findAll();
+        List<OrdersListDTO> listDTOS=new ArrayList<>();
+
+        for(int i=0;i<orders.size();i++)
+        {
+            List<OrderItem> orderItems=orderItemRepository.findAllByOrderId(orders.get(i).getId());
+            OrdersListDTO ordersListDTO= new OrdersListDTO();
+            ordersListDTO.setAmount(orders.get(i).getAmount());
+            ordersListDTO.setOrderId(orders.get(i).getId());
+            ordersListDTO.setOrderedItem(orderItems);
+            listDTOS.add(ordersListDTO);
+        }
+        return listDTOS;
+    }
+
+    @Override
+    public OrdersListDTO getOrderById(long id) {
+        OrdersListDTO ordersListDTO=new OrdersListDTO();
+        long amount=0;
+        ordersListDTO.setOrderId(id);
+        List<OrderItem>orderItems=orderItemRepository.findAllByOrderId(id);
+        for(int i=0;i<orderItems.size();i++)
+            amount+=orderItems.get(i).getPrice();
+        ordersListDTO.setAmount(amount);
+        ordersListDTO.setOrderedItem(orderItems);
+        return ordersListDTO;
+    }
+
+
 }

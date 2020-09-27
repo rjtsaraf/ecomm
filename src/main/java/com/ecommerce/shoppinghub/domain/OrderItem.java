@@ -14,8 +14,9 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 public class OrderItem extends Base
 {
-    private Long OrderId;
-    private Long PhysicalId;
+    private Long orderId;
+    private Long physicalId;
     @Enumerated(value = EnumType.STRING)
     private Status status;
+    private long price;
 }
